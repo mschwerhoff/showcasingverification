@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from 'article_tags.html' import article_tags %}
+
+{% block title %}{{ tag }} - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+
+<h1>#{{ tag }}</h1>
+
+{% for article in articles_page.object_list %}
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+      </h2>
+      <p>{{ article.summary }}</p>
+      {{ article_tags(article, pages, [tag]) }}  
+    </div>
+  </article>
+{% endfor %}
+
+{% include 'pagination.inc.html' %}
+
+{% endblock %}

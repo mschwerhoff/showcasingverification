@@ -1,0 +1,19 @@
+{% for article in articles_page.object_list %}
+  <article class="summary">
+    {# {% include 'metadata.inc.html' %} #}
+    <div>
+      <h2>
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+      </h2>
+      <p>{{ article.summary }}</p>
+      {% if article.tags and article.tags|count > 1 %}
+        <p class="tags">
+          {% for another_tag in article.tags if another_tag != tag %}
+            <a href="{{ SITEURL }}/{{ another_tag.url }}">#{{ another_tag }}</a>
+            {% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}    
+    </div>
+  </article>
+{% endfor %}

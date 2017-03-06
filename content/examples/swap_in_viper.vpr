@@ -1,0 +1,23 @@
+field f: Int
+
+method swap1(x: Ref, y: Ref)
+  requires acc(x.f) && (x != y ==> acc(y.f))
+  ensures  acc(x.f) && (x != y ==> acc(y.f))
+  ensures  x.f == old(y.f)
+  ensures  y.f == old(x.f)
+{
+  var tmp: Int := x.f
+  x.f := y.f
+  y.f := tmp
+}
+
+method swap2(x: Ref, y: Ref)
+  requires forall r: Ref :: r in Set(x, y) ==> acc(r.f)
+  ensures  forall r: Ref :: r in Set(x, y) ==> acc(r.f)
+  ensures  x.f == old(y.f)
+  ensures  y.f == old(x.f)
+{
+  var tmp: Int := x.f
+  x.f := y.f
+  y.f := tmp
+}

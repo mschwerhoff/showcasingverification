@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from 'article_tags.html' import article_tags %}
+
+{% block title %}{{ page.title }}- {{ SITENAME }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ page.title }}</h1>
+{{ page.content }}		
+
+{% for article in articles if page.grouptag in article.tags %}
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+      </h2>
+      <p>{{ article.summary }}</p>
+      {{ article_tags(article, pages, [page.grouptag]) }}
+    </div>
+  </article>
+{% endfor %}
+
+{% endblock %}
