@@ -37,6 +37,9 @@ DEFAULT_PAGINATION = False
 
 THEME='themes/pelican-sober'
 
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['article-lists']
+
 ARTICLE_PATHS = ['examples']
 
 DIRECT_TEMPLATES = []
