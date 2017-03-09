@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'Malte Schwerhoff'
 SITENAME = 'Showcasing Verification'
 SITEURL = ''
-SITEURL_HOME = 'http://showcasingverification.schwerhoff.de/'
+SITEURL_HOME = '/'
 
 PATH = 'content'
 
@@ -32,10 +32,8 @@ AUTHOR_FEED_RSS = None
 
 DEFAULT_PAGINATION = False
 
-# Set to True if you want document-relative URLs, e.g. when developing
-RELATIVE_URLS = False
-
-DELETE_OUTPUT_DIRECTORY = True
+# Uncomment if you want document-relative URLs, e.g. when developing
+# RELATIVE_URLS = True
 
 THEME='themes/pelican-sober'
 
