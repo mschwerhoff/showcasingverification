@@ -61,6 +61,4 @@ Tasks:
 
 ### Solutions to challenge 1
 
-{% for article in articles if 'VerifyThis'16-Ch1' in article.tags %}
-  <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
-{% endfor %}
+{{$ article_list VerifyThis'16-Ch1 $}}
