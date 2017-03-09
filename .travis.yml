@@ -5,6 +5,7 @@ branches:
   only:
   - master
 install:
+- pip install markdown
 - pip install beautifulsoup4
 - pip install pelican
 - pip install ghp-import
