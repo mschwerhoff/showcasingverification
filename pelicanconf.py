@@ -44,7 +44,8 @@ ARTICLE_PATHS = ['examples']
 
 DIRECT_TEMPLATES = []
 # PAGE_SAVE_AS = '{slug}.html'
-# ARTICLE_SAVE_AS = '{slug}.html'
+ARTICLE_SAVE_AS = 'examples/{slug}.html'
+ARTICLE_URL = 'examples/{slug}.html'
 AUTHOR_SAVE_AS = ''
 CATEGORY_SAVE_AS = ''
 TAGS_SAVE_AS = ''
