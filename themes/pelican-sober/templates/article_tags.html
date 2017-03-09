@@ -1,4 +1,4 @@
-{% macro article_tags(article, pages, tags_to_ignore=[]) -%}
+{% macro article_tags(article, pages, SITEURL, tags_to_ignore=[]) -%}
   {% if article.tags %}
     <p class="tags">
       {% for tag in article.tags if not tag in tags_to_ignore %}
