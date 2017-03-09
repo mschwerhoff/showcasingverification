@@ -1,4 +1,4 @@
-Tags: VeriFast, VerifyThis'16-Ch1, Dafny
+Tags: VerifyThis'16-Ch1, Dafny
 Title: Dafny Solution of Challenge 1 of VerifyThis'16
 Date: 2017-03-08
 
