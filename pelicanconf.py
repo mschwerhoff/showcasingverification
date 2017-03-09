@@ -42,6 +42,8 @@ PLUGINS = ['article-lists']
 
 ARTICLE_PATHS = ['examples']
 
+STATIC_PATHS = ['index.html']
+
 DIRECT_TEMPLATES = []
 # PAGE_SAVE_AS = '{slug}.html'
 ARTICLE_SAVE_AS = 'examples/{slug}.html'

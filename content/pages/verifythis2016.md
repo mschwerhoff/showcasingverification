@@ -1,3 +1,4 @@
+Slug: verifythis2016
 Title: VerifyThis@ETAPS'16
 Date: 2017-03-07
 
