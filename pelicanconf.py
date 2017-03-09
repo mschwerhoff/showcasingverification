@@ -32,8 +32,10 @@ AUTHOR_FEED_RSS = None
 
 DEFAULT_PAGINATION = False
 
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# Set to True if you want document-relative URLs, e.g. when developing
+RELATIVE_URLS = False
+
+DELETE_OUTPUT_DIRECTORY = True
 
 THEME='themes/pelican-sober'
 

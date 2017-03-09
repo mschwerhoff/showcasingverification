@@ -5,8 +5,8 @@ PELICANOPTS= -t pelican-theme
 BASEDIR=$(CURDIR)
 INPUTDIR=$(BASEDIR)/content
 OUTPUTDIR=$(BASEDIR)/output
-CONFFILE=$(BASEDIR)/settings.py
-PUBLISHCONF=$(BASEDIR)/settings.py
+CONFFILE=$(BASEDIR)/pelicanconf.py
+PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 FTP_HOST=localhost
 FTP_USER=anonymous
