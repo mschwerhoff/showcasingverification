@@ -5,7 +5,7 @@
 
 {% block extra_meta %}
 
-  <meta name="description" content="{{ article.summary|striptags }}">
+  <meta name="description" content="{{ article.summary|striptags|escape }}">
 
   {% if PELICAN_SOBER_TWITTER_CARD_CREATOR or PELICAN_SOBER_TWITTER_CARD_SITE %}
 	<meta name="twitter:card" content="summary">
@@ -16,7 +16,7 @@
 	  <meta name="twitter:creator" content="@{{ PELICAN_SOBER_TWITTER_CARD_CREATOR }}">
 	{% endif %}
 	<meta name="twitter:title" content="{{ article.title }}">
-	<meta name="twitter:description" content="{{ article.summary|striptags }}">
+	<meta name="twitter:description" content="{{ article.summary|striptags|escape }}">
 	<meta name="twitter:url" content="{{ SITEURL }}/{{ article.url }}">
 {% endif %}
 
