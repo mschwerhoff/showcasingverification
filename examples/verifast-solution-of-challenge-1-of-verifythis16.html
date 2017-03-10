@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>VeriFast Solution of Challenge 1 of VerifyThis'16 - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+  <meta name="description" content="A VeriFast solution to challenge 1 of VerifyThis&#39;16. The solution uses VeriFast&#39;s Java front-end. /*@ predicate vector(int[] X, int m; list&lt;int&gt; values) = X[..] |-&gt; values &amp;*&amp; X.length == m; predicate vectors(int[][] XsArray, list&lt;int[]&gt; Xs, int m; list&lt;list&lt;int&gt; &gt; vss) = switch (Xs) { case nil: return vss == nil; case cons …">
+
+
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		<h1>VeriFast Solution of Challenge 1 of VerifyThis'16</h1>
+		    <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifast.html">#VeriFast</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifythis16-ch1.html">#VerifyThis'16-Ch1</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/java.html">#Java</a>
+    </p>
+
+		<p>A VeriFast solution to challenge 1 of VerifyThis'16. The solution uses
+VeriFast's Java front-end.</p>
+<div class="highlight"><pre><span></span><span class="cm">/*@</span>
+
+<span class="cm">predicate vector(int[] X, int m; list&lt;int&gt; values) = X[..] |-&gt; values &amp;*&amp; X.length == m;</span>
+
+<span class="cm">predicate vectors(int[][] XsArray, list&lt;int[]&gt; Xs, int m; list&lt;list&lt;int&gt; &gt; vss) =</span>
+<span class="cm">    switch (Xs) {</span>
+<span class="cm">        case nil: return vss == nil;</span>
+<span class="cm">        case cons(X, Xs0): return vector(X, m, ?vs) &amp;*&amp; vectors(XsArray, Xs0, m, ?vss0) &amp;*&amp; vss == cons(vs, vss0);</span>
+<span class="cm">    };</span>
+
+<span class="cm">predicate matrix(int[][] X, int n, int m; list&lt;list&lt;int&gt; &gt; rows) =</span>
+<span class="cm">    X[..] |-&gt; ?rowArrays &amp;*&amp; n == X.length &amp;*&amp;</span>
+<span class="cm">    vectors(X, rowArrays, m, rows);</span>
+
+<span class="cm">fixpoint int matrix_elem(list&lt;list&lt;int&gt; &gt; rows, int i, int j) { return nth(j, nth(i, rows)); }</span>
+
+<span class="cm">fixpoint nat len&lt;t&gt;(list&lt;t&gt; xs) {</span>
+<span class="cm">    switch (xs) {</span>
+<span class="cm">        case nil: return zero;</span>
+<span class="cm">        case cons(x, xs0): return succ(len(xs0));</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+
+<span class="cm">lemma_auto void len_eq_nat_of_int_length&lt;t&gt;(list&lt;t&gt; xs)</span>
+<span class="cm">    requires true;</span>
+<span class="cm">    ensures len(xs) == nat_of_int(length(xs));</span>
+<span class="cm">{</span>
+<span class="cm">    switch (xs) {</span>
+<span class="cm">        case nil:</span>
+<span class="cm">        case cons(x0, xs0):</span>
+<span class="cm">            len_eq_nat_of_int_length(xs0);</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+
+<span class="cm">fixpoint int matrix_multiply_elem(list&lt;int&gt; Arow, int j, list&lt;list&lt;int&gt; &gt; Brows) {</span>
+<span class="cm">    switch (Arow) {</span>
+<span class="cm">        case nil: return 0;</span>
+<span class="cm">        case cons(vA, Arow0): return vA * nth(j, head(Brows)) + matrix_multiply_elem(Arow0, j, tail(Brows));</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+
+<span class="cm">fixpoint list&lt;int&gt; matrix_multiply_row(nat fuel, list&lt;int&gt; row, int j, list&lt;list&lt;int&gt; &gt; B) {</span>
+<span class="cm">    switch (fuel) {</span>
+<span class="cm">        case zero: return nil;</span>
+<span class="cm">        case succ(fuel0): return cons(matrix_multiply_elem(row, j, B), matrix_multiply_row(fuel0, row, j + 1, B));</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+
+<span class="cm">fixpoint list&lt;list&lt;int&gt; &gt; matrix_multiply(list&lt;list&lt;int&gt; &gt; A, list&lt;list&lt;int&gt; &gt; B) {</span>
+<span class="cm">    switch (A) {</span>
+<span class="cm">        case nil: return nil;</span>
+<span class="cm">        case cons(row, rows0): return cons(matrix_multiply_row(len(row), row, 0, B), matrix_multiply(rows0, B));</span>
+<span class="cm">    }</span>
+<span class="cm">}</span>
+
+<span class="cm">@*/</span>
+
+<span class="kd">class</span> <span class="nc">Math</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">matrixMultiply</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">B</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">C</span><span class="o">)</span>
+    <span class="c1">//@ requires [_]matrix(A, ?N, N, ?Arows) &amp;*&amp; [_]matrix(B, N, N, ?Brows) &amp;*&amp; matrix(C, N, N, _);</span>
+    <span class="c1">//@ ensures matrix(C, N, N, matrix_multiply(Arows, Brows));</span>
+    <span class="o">{</span>
+        <span class="c1">//@ open matrix(A, _, _, _);</span>
+        <span class="c1">//@ open matrix(C, _, _, _);</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="c1">//@ assert C[..] |-&gt; ?CrowArrays;</span>
+        <span class="c1">//@ assert [_]A[..] |-&gt; ?ArowArrays;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="o">;</span> <span class="o">)</span>
+            <span class="cm">/*@</span>
+<span class="cm">            requires</span>
+<span class="cm">                C[i..] |-&gt; drop(i, CrowArrays) &amp;*&amp; vectors(C, drop(i, CrowArrays), N, _) &amp;*&amp; [_]matrix(B, N, N, Brows) &amp;*&amp;</span>
+<span class="cm">                [_]A[i..] |-&gt; drop(i, ArowArrays) &amp;*&amp; [_]vectors(A, drop(i, ArowArrays), N, ?Arows1) &amp;*&amp; length(CrowArrays) == length(ArowArrays);</span>
+<span class="cm">            @*/</span>
+            <span class="c1">//@ ensures C[old_i..] |-&gt; drop(old_i, CrowArrays) &amp;*&amp; vectors(C, drop(old_i, CrowArrays), N, matrix_multiply(Arows1, Brows));</span>
+        <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">//@ open vectors(C, nil, N, _);</span>
+                <span class="c1">//@ open vectors(A, nil, N, _);</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">//@ drop_n_plus_one(i, CrowArrays);</span>
+            <span class="c1">//@ drop_n_plus_one(i, ArowArrays);</span>
+            <span class="kt">int</span><span class="o">[]</span> <span class="n">ArowArray</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="kt">int</span><span class="o">[]</span> <span class="n">CrowArray</span> <span class="o">=</span> <span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="c1">//@ open [_]vectors(A, drop(i, ArowArrays), _, _);</span>
+            <span class="c1">//@ assert [_]vectors(A, drop(i + 1, ArowArrays), N, tail(Arows1));</span>
+            <span class="c1">//@ assert [_]ArowArray[..] |-&gt; ?Arow;</span>
+            <span class="c1">//@ open vectors(C, drop(i, CrowArrays), _, _);</span>
+            <span class="c1">//@ assert CrowArray[..] |-&gt; ?Crow;</span>
+            <span class="c1">//@ assert len(Arow) == len(Crow);</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="o">;</span> <span class="o">)</span>
+                <span class="c1">//@ requires [_]ArowArray[..] |-&gt; Arow &amp;*&amp; [_]matrix(B, N, N, Brows) &amp;*&amp; CrowArray[j..] |-&gt; ?xs &amp;*&amp; 0 &lt;= j;</span>
+                <span class="c1">//@ ensures CrowArray[old_j..] |-&gt; matrix_multiply_row(len(xs), Arow, old_j, Brows);</span>
+            <span class="o">{</span>
+                <span class="c1">//@ switch (xs) { case nil: case cons(h, t): }</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="n">CrowArray</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                <span class="c1">//@ open [_]matrix(B, _, _, _);</span>
+                <span class="c1">//@ assert [_]B[..] |-&gt; ?BrowArrays;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span>
+                    <span class="c1">//@ requires CrowArray[j] |-&gt; ?x &amp;*&amp; [_]ArowArray[k..] |-&gt; drop(k, Arow) &amp;*&amp; [_]B[k..] |-&gt; drop(k, BrowArrays) &amp;*&amp; [_]vectors(B, drop(k, BrowArrays), N, ?Brows1) &amp;*&amp; 0 &lt;= k;</span>
+                    <span class="c1">//@ ensures CrowArray[j] |-&gt; x + matrix_multiply_elem(drop(old_k, Arow), j, Brows1);</span>
+                <span class="o">{</span>
+                    <span class="c1">//@ drop_n_plus_one(k, Arow);</span>
+                    <span class="c1">//@ drop_n_plus_one(k, BrowArrays);</span>
+                    <span class="c1">//@ open [_]vectors(B, drop(k, BrowArrays), _, _);</span>
+                    <span class="kt">int</span><span class="o">[]</span> <span class="n">BrowArray</span> <span class="o">=</span> <span class="n">B</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
+                    <span class="c1">//@ open [_]vector(BrowArray, _, _);</span>
+                    <span class="c1">//@ assert [_]BrowArray[..] |-&gt; ?Brow &amp;*&amp; BrowArray.length == N;</span>
+                    <span class="n">CrowArray</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+=</span> <span class="n">ArowArray</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">*</span> <span class="n">BrowArray</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                <span class="o">}</span>
+                <span class="c1">//@ assert CrowArray[j] |-&gt; matrix_multiply_elem(Arow, j, Brows);</span>
+                <span class="n">j</span><span class="o">++;</span>
+                <span class="c1">//@ recursive_call();</span>
+
+            <span class="o">}</span>
+            <span class="n">i</span><span class="o">++;</span>
+            <span class="c1">//@ recursive_call();</span>
+
+            <span class="c1">//@ assert [_]vectors(A, drop(old_i + 1, ArowArrays), N, tail(Arows1));</span>
+            <span class="c1">//@ assert vectors(C, drop(old_i + 1, CrowArrays), N, matrix_multiply(tail(Arows1), Brows));</span>
+            <span class="c1">//@ assert CrowArray[..] |-&gt; matrix_multiply_row(len(head(Arows1)), head(Arows1), 0, Brows);</span>
+            <span class="c1">//@ close vectors(C, drop(old_i, CrowArrays), N, matrix_multiply(Arows1, Brows));</span>
+
+        <span class="o">}</span>
+        <span class="c1">//@ close matrix(C, N, N, _);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>	
+	</article>
+
+<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+-->
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

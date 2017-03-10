@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>VerifyThis@ETAPS'16- Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>VerifyThis@ETAPS'16</h1>
+<p><a href="http://etaps2016.verifythis.org/">VerifyThis@ETAPS'16</a> was the 5th event in the
+VerifyThis verification competition series, held at ETAPS'16 in Eindhoven.</p>
+<h2>Prize winners</h2>
+<ul>
+<li>Best problem submission: Daniel Grahl, for suggesting "Strassen's algorithm", which inspired the matrix multiplication challenge</li>
+<li>Distinguished user-assistance tool feature: Alexander J. Summers and Malte Schwerhoff (Viper) for their support of quantified permissions</li>
+<li>Best student team (2x): Martin Clochard (Why3), Léon Gondelman &amp; Mário Pereira (Why3)</li>
+<li>Best team: Bart Jacobs (VeriFast)</li>
+</ul>
+<h2>Challenges</h2>
+<h3>Challenge 1: Matrix multiplication</h3>
+<p>Consider the following pseudocode algorithm, which is naive implementation of
+matrix multiplication. For simplicity we assume that the matrices are square.</p>
+<div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">[][]</span> <span class="nf">matrixMultiply</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">B</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+
+    <span class="c1">// initialise C</span>
+    <span class="kt">int</span><span class="o">[][]</span> <span class="n">C</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">n</span><span class="o">];</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+          <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">k</span><span class="o">++)</span> <span class="o">{</span>
+                  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                      <span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">+=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span> <span class="o">*</span> <span class="n">B</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                  <span class="o">}</span>
+          <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">C</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+<p>Tasks:</p>
+<ol>
+<li>
+<p>Provide a specification to describe the behaviour of this algorithm, and
+  prove that it correctly implements its specification.</p>
+</li>
+<li>
+<p>Show that matrix multiplication is associative, i.e., the order in which
+  matrices are multiplied can be disregarded: <em>A(BC) = (AB)C</em>. To show this,
+  you should write a program that performs the two different computations, and
+  then prove that the result of the two computations is always the same.</p>
+</li>
+<li>
+<p><strong>[Optional, if time permits]</strong> In the literature, there exist many
+  proposals for more efficient matrix multiplication algorithms. Strassen’s
+  algorithm was one of the first. The key idea of the algorithm is to use a
+  recurisive algorithm that reduces the number of multiplications on
+  submatrices (from 8 to 7), see
+  <a href="https://en.wikipedia.org/wiki/Strassen_algorithm">Wikipedia</a>
+  for an explanation. A relatively clean Java implementation (and Python and
+  C++) can be found
+  <a href="https://martin-thoma.com/strassen-algorithm-in-python-java-cpp/">here</a>.
+  Prove that the naive algorithm above has the same behaviour as Strassen’s
+  algorithm. Proving it for a restricted case, like a <em>2x2</em> matrix should be
+  straightforward, the challenge is to prove it for arbitrary matrices with
+  size <em>2^n</em>.</p>
+</li>
+</ol>
+<h3>Solutions to challenge 1</h3>
+<ul class="article-lists-group"><li class="article-lists-item"><a href="https://mschwerhoff.github.io/showcasingverification/examples/dafny-solution-of-challenge-1-of-verifythis16.html">Dafny Solution of Challenge 1 of VerifyThis'16</a></li><li class="article-lists-item"><a href="https://mschwerhoff.github.io/showcasingverification/examples/verifast-solution-of-challenge-1-of-verifythis16.html">VeriFast Solution of Challenge 1 of VerifyThis'16</a></li></ul>
+<h3>Challenge 2: dummy dummy dummy</h3>
+<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
+eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+<h3>Solutions to challenge 2</h3>
+<ul class="article-lists-group"><li class="article-lists-item"><a href="https://mschwerhoff.github.io/showcasingverification/examples/swap-in-verifast.html">Swap in VeriFast</a></li><li class="article-lists-item"><a href="https://mschwerhoff.github.io/showcasingverification/examples/swap-in-viper.html">Swap in Viper</a></li></ul>		
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li class="active">
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

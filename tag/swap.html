@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>swap - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>#swap</h1>
+
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/swap-in-verifast.html" rel="bookmark" title="Permalink to Swap in VeriFast">Swap in VeriFast</a>
+      </h2>
+      <p><p>A VeriFast encoding of a method that swaps the values of two fields <code>x.f</code> and <code>y.f</code>.</p>
+<div class="highlight"><pre><span></span>#include &quot;stdlib.h&quot;
+
+struct Cell {
+  int f;
+};
+
+void swap(struct Cell* x, struct Cell* y)
+  //@ requires x-&gt;f |-&gt; ?v &amp;*&amp; y-&gt;f |-&gt; ?w;
+  //@ ensures  x-&gt;f |-&gt; w &amp;*&amp; y-&gt;f |-&gt; v;
+{
+  int tmp = x- …</pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifast.html">#VeriFast</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/permissions.html">#Permissions</a>
+    </p>
+  
+    </div>
+  </article>
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/swap-in-viper.html" rel="bookmark" title="Permalink to Swap in Viper">Swap in Viper</a>
+      </h2>
+      <p><p>Two Viper encodings of a method that swaps the values of two fields <code>x.f</code> and <code>y.f</code>.</p>
+<div class="highlight"><pre><span></span>field f: Int
+
+method swap1(x: Ref, y: Ref)
+  requires acc(x.f) &amp;&amp; (x != y ==&gt; acc(y.f))
+  ensures  acc(x.f) &amp;&amp; (x != y ==&gt; acc(y.f))
+  ensures  x.f == old(y …</pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">#Viper</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/permissions.html">#Permissions</a>
+    </p>
+  
+    </div>
+  </article>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

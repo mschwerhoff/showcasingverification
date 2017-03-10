@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>VeriFast - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>#VeriFast</h1>
+
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/verifast-solution-of-challenge-1-of-verifythis16.html" rel="bookmark" title="Permalink to VeriFast Solution of Challenge 1 of VerifyThis'16">VeriFast Solution of Challenge 1 of VerifyThis'16</a>
+      </h2>
+      <p><p>A VeriFast solution to challenge 1 of VerifyThis'16. The solution uses
+VeriFast's Java front-end.</p>
+<div class="highlight"><pre><span></span><span class="cm">/*@</span>
+
+<span class="cm">predicate vector(int[] X, int m; list&lt;int&gt; values) = X[..] |-&gt; values &amp;*&amp; X.length == m;</span>
+
+<span class="cm">predicate vectors(int[][] XsArray, list&lt;int[]&gt; Xs, int m; list&lt;list&lt;int&gt; &gt; vss) =</span>
+<span class="cm">    switch (Xs) {</span>
+<span class="cm">        case nil: return vss == nil;</span>
+<span class="cm">        case cons …</span></pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifythis16-ch1.html">#VerifyThis'16-Ch1</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/java.html">#Java</a>
+    </p>
+  
+    </div>
+  </article>
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/swap-in-verifast.html" rel="bookmark" title="Permalink to Swap in VeriFast">Swap in VeriFast</a>
+      </h2>
+      <p><p>A VeriFast encoding of a method that swaps the values of two fields <code>x.f</code> and <code>y.f</code>.</p>
+<div class="highlight"><pre><span></span>#include &quot;stdlib.h&quot;
+
+struct Cell {
+  int f;
+};
+
+void swap(struct Cell* x, struct Cell* y)
+  //@ requires x-&gt;f |-&gt; ?v &amp;*&amp; y-&gt;f |-&gt; ?w;
+  //@ ensures  x-&gt;f |-&gt; w &amp;*&amp; y-&gt;f |-&gt; v;
+{
+  int tmp = x- …</pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/swap.html">#swap</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/permissions.html">#Permissions</a>
+    </p>
+  
+    </div>
+  </article>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

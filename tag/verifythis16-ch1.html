@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>VerifyThis'16-Ch1 - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>#VerifyThis'16-Ch1</h1>
+
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/dafny-solution-of-challenge-1-of-verifythis16.html" rel="bookmark" title="Permalink to Dafny Solution of Challenge 1 of VerifyThis'16">Dafny Solution of Challenge 1 of VerifyThis'16</a>
+      </h2>
+      <p><p>A Dafny solution to challenge 1 of VerifyThis'16. The solution was submitted by
+Luca Weibel and Christiaan Dirkx.</p>
+<div class="highlight"><pre><span></span>type matrix = array2&lt;int&gt;
+
+predicate validMatrix(m: matrix) 
+{
+  m != null &amp;&amp; m.Length0 &gt; 0 &amp;&amp; m.Length0 == m.Length1
+}
+
+predicate validMultiplication(a: matrix, b: matrix, c: matrix)
+  requires validMatrix(a) &amp;&amp; validMatrix(b) &amp;&amp; validMatrix(c …</pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/dafny.html">#Dafny</a>
+    </p>
+  
+    </div>
+  </article>
+  <article class="summary">
+    <div>
+      <h2>
+        <a href="https://mschwerhoff.github.io/showcasingverification/examples/verifast-solution-of-challenge-1-of-verifythis16.html" rel="bookmark" title="Permalink to VeriFast Solution of Challenge 1 of VerifyThis'16">VeriFast Solution of Challenge 1 of VerifyThis'16</a>
+      </h2>
+      <p><p>A VeriFast solution to challenge 1 of VerifyThis'16. The solution uses
+VeriFast's Java front-end.</p>
+<div class="highlight"><pre><span></span><span class="cm">/*@</span>
+
+<span class="cm">predicate vector(int[] X, int m; list&lt;int&gt; values) = X[..] |-&gt; values &amp;*&amp; X.length == m;</span>
+
+<span class="cm">predicate vectors(int[][] XsArray, list&lt;int[]&gt; Xs, int m; list&lt;list&lt;int&gt; &gt; vss) =</span>
+<span class="cm">    switch (Xs) {</span>
+<span class="cm">        case nil: return vss == nil;</span>
+<span class="cm">        case cons …</span></pre></div></p>
+          <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifast.html">#VeriFast</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/java.html">#Java</a>
+    </p>
+  
+    </div>
+  </article>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

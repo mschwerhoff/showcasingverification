@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Dafny Solution of Challenge 1 of VerifyThis'16 - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+  <meta name="description" content="A Dafny solution to challenge 1 of VerifyThis&#39;16. The solution was submitted by Luca Weibel and Christiaan Dirkx. type matrix = array2&lt;int&gt; predicate validMatrix(m: matrix) { m != null &amp;&amp; m.Length0 &gt; 0 &amp;&amp; m.Length0 == m.Length1 } predicate validMultiplication(a: matrix, b: matrix, c: matrix) requires validMatrix(a) &amp;&amp; validMatrix(b) &amp;&amp; validMatrix(c …">
+
+
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		<h1>Dafny Solution of Challenge 1 of VerifyThis'16</h1>
+		    <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifythis16-ch1.html">#VerifyThis'16-Ch1</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/dafny.html">#Dafny</a>
+    </p>
+
+		<p>A Dafny solution to challenge 1 of VerifyThis'16. The solution was submitted by
+Luca Weibel and Christiaan Dirkx.</p>
+<div class="highlight"><pre><span></span>type matrix = array2&lt;int&gt;
+
+predicate validMatrix(m: matrix) 
+{
+  m != null &amp;&amp; m.Length0 &gt; 0 &amp;&amp; m.Length0 == m.Length1
+}
+
+predicate validMultiplication(a: matrix, b: matrix, c: matrix)
+  requires validMatrix(a) &amp;&amp; validMatrix(b) &amp;&amp; validMatrix(c)
+  requires a.Length0 == b.Length0 == c.Length0
+{
+  forall i,j | 0 &lt;= i &lt; a.Length0 &amp;&amp; 0 &lt;= j &lt; a.Length0 :: c[i,j] == MatrixSum(a,b,i,j) 
+}
+
+function method MatrixSum(a: matrix, b: matrix, i: nat, j: nat) : int
+  requires validMatrix(a) &amp;&amp; validMatrix(b)
+  requires a.Length0 == b.Length0 
+  requires i &lt; a.Length0 &amp;&amp; j &lt; b.Length0
+{
+  sum(a,b,i,j,a.Length0)
+}
+
+function method sum(a: matrix, b: matrix, i: int, j: int, k: int) : int
+  requires validMatrix(a) &amp;&amp; validMatrix(b)
+  requires a.Length0 == b.Length0 
+  requires 0 &lt;= i &lt; a.Length0 &amp;&amp; 0 &lt;= j &lt; b.Length0
+  requires 0 &lt;= k &lt;= a.Length0
+{
+  if k == 0 then 0 else a[i,k-1] * b[k-1,j] + sum(a,b,i,j,k - 1)
+}
+
+method MatrixMultiplication(a: matrix, b: matrix) returns (c: matrix) 
+  requires validMatrix(a) &amp;&amp; validMatrix(b)
+  requires a.Length0 == b.Length0
+  ensures validMatrix(c)
+  ensures a.Length0 == b.Length0 == c.Length0
+  ensures validMultiplication(a,b,c)
+{
+  var n := a.Length0;
+
+  c := new int[n,n];
+
+  forall i,j | 0 &lt;= i &lt; n &amp;&amp; 0 &lt;= j &lt; n 
+  { 
+    c[i,j] := 0; 
+  }
+  assert forall i,j | 0 &lt;= i &lt; n &amp;&amp; 0 &lt;= j &lt; n :: c[i,j] == 0;
+
+  var i, k, j := 0, 0, 0;
+  while (i &lt; n) 
+    invariant 0 &lt;= i &lt;= n
+
+    invariant forall i&#39;,j&#39; | 0 &lt;= i&#39; &lt; i &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == MatrixSum(a,b,i&#39;,j&#39;) 
+    invariant forall i&#39;,j&#39; | i &lt;= i&#39; &lt; n &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == 0;
+  {
+    k := 0;
+    while (k &lt; n)
+      invariant 0 &lt;= k &lt;= n
+
+      invariant forall i&#39;,j&#39; | 0 &lt;= i&#39; &lt; i &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == MatrixSum(a,b,i&#39;,j&#39;)
+      invariant forall i&#39;,j&#39; | i &lt; i&#39; &lt; n &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == 0;
+
+      invariant forall j&#39; | 0 &lt;= j&#39; &lt; n :: c[i,j&#39;] == sum(a,b,i,j&#39;,k) 
+    {
+      j := 0;
+      while (j &lt; n)
+        invariant 0 &lt;= j &lt;= n
+
+        invariant forall i&#39;,j&#39; | 0 &lt;= i&#39; &lt; i &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == MatrixSum(a,b,i&#39;,j&#39;) 
+        invariant forall i&#39;,j&#39; | i &lt; i&#39; &lt; n &amp;&amp; 0 &lt;= j&#39; &lt; n :: c[i&#39;,j&#39;] == 0;
+
+        invariant forall j&#39; | j &lt;= j&#39; &lt; n :: c[i,j&#39;] == sum(a,b,i,j&#39;, k) 
+        invariant forall j&#39; | 0 &lt;= j&#39; &lt; j :: c[i,j&#39;] == sum(a,b,i,j&#39;, k+1) 
+      {
+        c[i,j] := c[i,j] + a[i,k] * b[k,j];
+        j := j + 1;
+      }
+      k := k + 1;
+    }
+    i := i + 1;
+  }
+}
+</pre></div>	
+	</article>
+
+<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+-->
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Swap in VeriFast - Showcasing Verification</title>	
+	<meta name="author" content="Malte Schwerhoff">
+	
+
+  <meta name="description" content="A VeriFast encoding of a method that swaps the values of two fields x.f and y.f. #include &#34;stdlib.h&#34; struct Cell { int f; }; void swap(struct Cell* x, struct Cell* y) //@ requires x-&gt;f |-&gt; ?v &amp;*&amp; y-&gt;f |-&gt; ?w; //@ ensures x-&gt;f |-&gt; w &amp;*&amp; y-&gt;f |-&gt; v; { int tmp = x- …">
+
+
+
+	<link rel="stylesheet" href="https://mschwerhoff.github.io/showcasingverification/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+	
+	<div class="container">
+	
+	<header role="banner">
+		<div class="feeds">
+		</div>
+		<div class="home">
+			<a href="https://mschwerhoff.github.io/showcasingverification">Showcasing Verification</a>
+		</div>
+		</header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		<h1>Swap in VeriFast</h1>
+		    <p class="tags">
+          <a href="https://mschwerhoff.github.io/showcasingverification/tag/swap.html">#swap</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/verifast.html">#VeriFast</a>
+,           <a href="https://mschwerhoff.github.io/showcasingverification/tag/permissions.html">#Permissions</a>
+    </p>
+
+		<p>A VeriFast encoding of a method that swaps the values of two fields <code>x.f</code> and <code>y.f</code>.</p>
+<div class="highlight"><pre><span></span>#include &quot;stdlib.h&quot;
+
+struct Cell {
+  int f;
+};
+
+void swap(struct Cell* x, struct Cell* y)
+  //@ requires x-&gt;f |-&gt; ?v &amp;*&amp; y-&gt;f |-&gt; ?w;
+  //@ ensures  x-&gt;f |-&gt; w &amp;*&amp; y-&gt;f |-&gt; v;
+{
+  int tmp = x-&gt;f;
+  x-&gt;f = y-&gt;f;
+  y-&gt;f = tmp;
+}
+</pre></div>
+
+
+<p>Note that the precondition disallows aliasing between <code>x</code> and <code>y</code>.</p>	
+	</article>
+
+<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+-->
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Pages</h2>
+	            <ul>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/verifythis2016.html">VerifyThis@ETAPS'16</a>
+									</li>
+	                <li >
+										<a href="https://mschwerhoff.github.io/showcasingverification/pages/viper.html">Viper</a>
+									</li>
+	            </ul>
+	          </nav>
+
+
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+<!--				
+		<p role="contentinfo">
+		  Malte Schwerhoff - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+-->
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
