@@ -4,12 +4,16 @@ python:
 branches:
   only:
   - master
+before_install:
+  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B -n 1 | head -c23)\""
 install:
 - pip install markdown
 - pip install beautifulsoup4
 - pip install pelican
 - pip install ghp-import
 script:
+- git config --global user.name "Travic CI"
+- git config --global user.email travis@users.noreply.github.com
 - make publish
 - make github
 env:
